@@ -1,6 +1,6 @@
 import { IsAlphanumeric, IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
-export class CreateImageDTO {
+export class CreateImageRequestDTO {
   @IsString()
   @IsAlphanumeric()
   @IsNotEmpty()
