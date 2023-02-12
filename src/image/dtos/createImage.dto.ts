@@ -1,11 +1,15 @@
-import { IsString } from 'class-validator';
+import { IsAlphanumeric, IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
 export class CreateImageDTO {
   @IsString()
+  @IsAlphanumeric()
+  @IsNotEmpty()
   name: string;
   @IsString()
-  description: string;
+  @IsAlphanumeric()
+  description?: string;
   @IsString()
+  @IsNotEmpty()
   status?: string;
   @IsString()
   listId?: string;
