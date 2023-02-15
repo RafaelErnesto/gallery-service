@@ -9,9 +9,9 @@ import { ImageService } from './services/image.service';
 @Module({
   controllers: [ImageController],
   providers: [
-    {provide: ImageService, useClass:  ImageService},
-    {provide: ImageRepositoryService, useClass: DynamoDbImageRepository},
-    {provide: ImageStorageRepositoryService, useClass: S3Repository}
-  ]
+    { provide: ImageService, useClass: ImageService },
+    { provide: ImageRepositoryService, useClass: DynamoDbImageRepository },
+    { provide: ImageStorageRepositoryService, useClass: S3Repository },
+  ],
 })
 export class ImageModule {}

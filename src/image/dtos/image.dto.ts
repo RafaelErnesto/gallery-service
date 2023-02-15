@@ -1,7 +1,7 @@
 export class ImageDTO {
-    name: String;
-    description?: String;
-    status: String;
-    listId?: String;
-    fileId: String;
+  name: string;
+  description?: string;
+  status: string;
+  listId?: string;
+  fileId: string;
 }

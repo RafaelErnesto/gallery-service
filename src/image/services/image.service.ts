@@ -1,20 +1,20 @@
-import { Injectable } from "@nestjs/common";
-import { NewImageDTO } from "../dtos/newImage.dto";
-import { ImageDTO } from "../dtos/image.dto";
-import { ImageRepositoryService } from "../repositories/ImageRepository.service";
-import { ImageStorageRepositoryService } from "../repositories/ImageStorageRepository.service";
+import { Injectable } from '@nestjs/common';
+import { NewImageDTO } from '../dtos/newImage.dto';
+import { ImageDTO } from '../dtos/image.dto';
+import { ImageRepositoryService } from '../repositories/ImageRepository.service';
+import { ImageStorageRepositoryService } from '../repositories/ImageStorageRepository.service';
 
 @Injectable()
 export class ImageService {
   constructor(
     private imageRepository: ImageRepositoryService,
-    private imageStorageRepository: ImageStorageRepositoryService
+    private imageStorageRepository: ImageStorageRepositoryService,
   ) {}
 
   async create(newImage: NewImageDTO): Promise<ImageDTO> {
-    let savedImageId = await this.imageStorageRepository.save(newImage.file);
+    const savedImageId = await this.imageStorageRepository.save(newImage.file);
 
-    let imageData = (Object.assign({}, newImage) as unknown) as ImageDTO;
+    const imageData = Object.assign({}, newImage) as unknown as ImageDTO;
     imageData.fileId = savedImageId;
 
     await this.imageRepository.save(imageData);

@@ -1,7 +1,7 @@
 export class CreateImageResponseDTO {
-    imageId: String
+  imageId: string;
 
-    constructor(imageId: String){
-        this.imageId = imageId
-    }
+  constructor(imageId: string) {
+    this.imageId = imageId;
+  }
 }
