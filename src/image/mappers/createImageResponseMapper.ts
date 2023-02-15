@@ -1,8 +1,8 @@
 import { CreateImageResponseDTO } from '../dtos/createImageResponse.dto';
-import { ImageDTO } from '../dtos/image.dto';
+import { Image } from '../entities/image.entity';
 
 export class CreateImageResponseMapper {
-  static toCreateImageResponse(imageData: ImageDTO): CreateImageResponseDTO {
-    return new CreateImageResponseDTO(imageData.fileId);
+  static toCreateImageResponse(image: Image): CreateImageResponseDTO {
+    return new CreateImageResponseDTO(image.fileId);
   }
 }

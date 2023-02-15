@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { ImageDTO } from '../dtos/image.dto';
+import { Image } from '../entities/image.entity';
 
 @Injectable()
 export abstract class ImageRepositoryService {
-  abstract save(image: ImageDTO): Promise<null>;
+  abstract save(image: Image): Promise<null>;
 }

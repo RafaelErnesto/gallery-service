@@ -1,8 +1,8 @@
-import { ImageDTO } from '../dtos/image.dto';
+import { Image } from '../entities/image.entity';
 import { ImageRepositoryService } from './ImageRepository.service';
 
 export class ImageRepositoryMock extends ImageRepositoryService {
-  save(image: ImageDTO): Promise<null> {
+  save(image: Image): Promise<null> {
     return null;
   }
 }
