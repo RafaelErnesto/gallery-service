@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { GetImageDTO } from '../dtos/getImage.dto';
 import { NewImageDTO } from '../dtos/newImage.dto';
 import { Image } from '../entities/image.entity';
 import { ImageRepositoryService } from '../repositories/ImageRepository.service';
@@ -19,5 +20,10 @@ export class ImageService {
 
     await this.imageRepository.save(imageData);
     return imageData;
+  }
+
+  async getImage(imageId: string): Promise<GetImageDTO> {
+    const result = await this.imageRepository.get(imageId);
+    return Object.assign(new GetImageDTO(), result);
   }
 }

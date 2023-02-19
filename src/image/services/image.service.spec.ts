@@ -5,6 +5,7 @@ import { ImageRepositoryMock } from '../repositories/ImageRepositoryMock.service
 import { ImageStorageRepositoryService } from '../repositories/ImageStorageRepository.service';
 import { ImageStorageRepositoryMock } from '../repositories/ImageStorageRepositoryMock.service';
 import { ImageService } from './image.service';
+import { Image } from '../entities/image.entity';
 
 describe('ImageService', () => {
   let service: ImageService;
@@ -35,7 +36,7 @@ describe('ImageService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should return imageData when ok', async () => {
+  it('create should return imageData when executes without errors', async () => {
     jest
       .spyOn(imageStorageRepository, 'save')
       .mockImplementationOnce(async () => 'imageId');
@@ -49,7 +50,7 @@ describe('ImageService', () => {
     expect(imageRepository.save).toHaveBeenCalled();
   });
 
-  it('should throw when an error happens while saving image into storage', async () => {
+  it('create should throw when an error happens while saving image into storage', async () => {
     jest
       .spyOn(imageStorageRepository, 'save')
       .mockImplementationOnce(async () => {
@@ -61,5 +62,18 @@ describe('ImageService', () => {
     } catch (error) {
       expect(error.message).toBe('Error saving image');
     }
+  });
+
+  it('getImage should return an image url when the imageId is correct', async () => {
+    jest.spyOn(imageRepository, 'get').mockImplementationOnce(async () => {
+      return Object.assign({} as Image, {
+        fileId: 'image url',
+        imageId: 'testId',
+        status: '',
+      });
+    });
+
+    const result = await service.getImage('testId');
+    expect(result.fileId).toBe('image url');
   });
 });
