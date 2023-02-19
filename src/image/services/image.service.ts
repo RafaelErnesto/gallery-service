@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { GetAllImageDTO } from '../dtos/getAllImages.dto';
 import { GetImageDTO } from '../dtos/getImage.dto';
 import { NewImageDTO } from '../dtos/newImage.dto';
+import { UpdateImageDTO } from '../dtos/updateImage.dto';
 import { Image } from '../entities/image.entity';
 import { ImageRepositoryService } from '../repositories/ImageRepository.service';
 import { ImageStorageRepositoryService } from '../repositories/ImageStorageRepository.service';
@@ -25,6 +26,9 @@ export class ImageService {
 
   async getImage(imageId: string): Promise<GetImageDTO> {
     const result = await this.imageRepository.get(imageId);
+    if (result == null) {
+      throw new Error('Image not found');
+    }
     return Object.assign(new GetImageDTO(), result);
   }
 
@@ -35,5 +39,11 @@ export class ImageService {
       quantity: result.length,
       total: 0,
     });
+  }
+
+  async update(updateImage: UpdateImageDTO): Promise<Image> {
+    const imageToUpdate = this.imageRepository.get(updateImage.imageId);
+    if (imageToUpdate == null) throw new Error('Image not found');
+    return null;
   }
 }

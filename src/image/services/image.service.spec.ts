@@ -6,6 +6,7 @@ import { ImageStorageRepositoryService } from '../repositories/ImageStorageRepos
 import { ImageStorageRepositoryMock } from '../repositories/ImageStorageRepositoryMock.service';
 import { ImageService } from './image.service';
 import { Image } from '../entities/image.entity';
+import { UpdateImageDTO } from '../dtos/updateImage.dto';
 
 describe('ImageService', () => {
   let service: ImageService;
@@ -79,13 +80,13 @@ describe('ImageService', () => {
 
   it('getImage should throw when image does not exist', async () => {
     jest.spyOn(imageRepository, 'get').mockImplementationOnce(async () => {
-      throw new Error('Image does not exist');
+      return null;
     });
 
     try {
       await service.getImage('testId');
     } catch (e) {
-      expect(e.message).toBe('Image does not exist');
+      expect(e.message).toBe('Image not found');
     }
   });
 
@@ -97,5 +98,19 @@ describe('ImageService', () => {
     const result = await service.getAll('userId');
     expect(result.images.length).toEqual(2);
     expect(result.quantity).toEqual(2);
+  });
+
+  it('update should throw when image does not exist', async () => {
+    jest.spyOn(imageRepository, 'get').mockImplementationOnce(async () => {
+      return null;
+    });
+
+    try {
+      await service.update(
+        Object.assign({} as UpdateImageDTO, { imageId: 'test' }),
+      );
+    } catch (e) {
+      expect(e.message).toBe('Image not found');
+    }
   });
 });
