@@ -76,4 +76,16 @@ describe('ImageService', () => {
     const result = await service.getImage('testId');
     expect(result.fileId).toBe('image url');
   });
+
+  it('getImage should throw when image does not exist', async () => {
+    jest.spyOn(imageRepository, 'get').mockImplementationOnce(async () => {
+      throw new Error('Image does not exist');
+    });
+
+    try {
+      await service.getImage('testId');
+    } catch (e) {
+      expect(e.message).toBe('Image does not exist');
+    }
+  });
 });
