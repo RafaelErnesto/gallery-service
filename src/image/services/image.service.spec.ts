@@ -146,4 +146,16 @@ describe('ImageService', () => {
     expect(result.name).toBe('Dummy Image Updated');
     expect(result.description).toBe('This is a dummy updated description');
   });
+
+  it('delete should throw when image does not exist', async () => {
+    jest.spyOn(imageRepository, 'get').mockImplementationOnce(async () => {
+      return null;
+    });
+
+    try {
+      await service.delete('test');
+    } catch (e) {
+      expect(e.message).toBe('Image not found');
+    }
+  });
 });
