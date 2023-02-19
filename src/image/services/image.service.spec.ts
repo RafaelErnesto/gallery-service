@@ -88,4 +88,14 @@ describe('ImageService', () => {
       expect(e.message).toBe('Image does not exist');
     }
   });
+
+  it('getAll should return a list of images when the user have images', async () => {
+    jest.spyOn(imageRepository, 'getAll').mockImplementationOnce(async () => {
+      return [new Image(), new Image()];
+    });
+
+    const result = await service.getAll('userId');
+    expect(result.images.length).toEqual(2);
+    expect(result.quantity).toEqual(2);
+  });
 });
