@@ -53,10 +53,12 @@ export class ImageService {
   }
 
   async delete(imageId: string): Promise<null> {
-    let imageToDelete = this.imageRepository.get(imageId);
+    const imageToDelete = await this.imageRepository.get(imageId);
     if (imageToDelete == null) {
       throw new Error('Image not found');
     }
+
+    await this.imageRepository.delete(imageToDelete.id);
     return null;
   }
 }

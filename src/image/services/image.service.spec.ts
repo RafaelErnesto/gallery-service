@@ -158,4 +158,18 @@ describe('ImageService', () => {
       expect(e.message).toBe('Image not found');
     }
   });
+
+  it('delete should set image to inactive when', async () => {
+    jest.spyOn(imageRepository, 'get').mockImplementationOnce(async () => {
+      return new Image();
+    });
+
+    jest
+      .spyOn(imageRepository, 'delete')
+      .mockImplementationOnce(async () => null);
+
+    await service.delete('test');
+
+    expect(imageRepository.delete).toBeCalledTimes(1);
+  });
 });
