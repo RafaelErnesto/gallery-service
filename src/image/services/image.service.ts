@@ -42,8 +42,13 @@ export class ImageService {
   }
 
   async update(updateImage: UpdateImageDTO): Promise<Image> {
-    const imageToUpdate = this.imageRepository.get(updateImage.imageId);
+    const imageToUpdate = await this.imageRepository.get(updateImage.imageId);
     if (imageToUpdate == null) throw new Error('Image not found');
-    return null;
+    const newImageData = Object.assign(
+      imageToUpdate,
+      updateImage,
+    ) as unknown as Image;
+
+    return await this.imageRepository.update(newImageData);
   }
 }

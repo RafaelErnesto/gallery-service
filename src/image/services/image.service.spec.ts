@@ -113,4 +113,37 @@ describe('ImageService', () => {
       expect(e.message).toBe('Image not found');
     }
   });
+
+  it('should update the image and return the updated image when update is ok', async () => {
+    jest.spyOn(imageRepository, 'get').mockImplementationOnce(async () => {
+      return Object.assign({} as Image, {
+        imageId: 'dummy',
+        name: 'Dummy Image',
+        description: 'This is a dummy description',
+        status: 'ACTIVE',
+        fileId: '',
+        listId: null,
+      });
+    });
+
+    const updateData = Object.assign({} as UpdateImageDTO, {
+      imageId: 'dummy',
+      name: 'Dummy Image Updated',
+      description: 'This is a dummy updated description',
+      status: 'ACTIVE',
+      fileId: '',
+      listId: null,
+    });
+
+    jest.spyOn(imageRepository, 'update').mockImplementationOnce(async () => {
+      return Object.assign({} as Image, {
+        id: updateData.imageId,
+        ...updateData,
+      });
+    });
+
+    const result = await service.update(updateData);
+    expect(result.name).toBe('Dummy Image Updated');
+    expect(result.description).toBe('This is a dummy updated description');
+  });
 });
