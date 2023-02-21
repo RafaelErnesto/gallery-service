@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   FileTypeValidator,
+  Get,
   MaxFileSizeValidator,
   Param,
   ParseFilePipe,
@@ -12,11 +13,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CreateImageRequestDTO } from '../dtos/createImageRequest.dto';
-import {
-  UpdatedImageRequestDTO,
-  UpdateImageRequestDTO,
-} from '../dtos/updatedImageRequest.dto';
-import { UpdateImageDTO } from '../dtos/updateImage.dto';
+import { UpdateImageRequestDTO } from '../dtos/updatedImageRequest.dto';
 import { CreateImageRequestMapper } from '../mappers/createImageRequestMapper';
 import { CreateImageResponseMapper } from '../mappers/createImageResponseMapper';
 import { UpdateImageRequestMapper } from '../mappers/updateImageRequestMapper';
@@ -27,6 +24,18 @@ const MAX_FILE_SIZE_IN_BYTES = 100000000;
 @Controller('image')
 export class ImageController {
   constructor(private service: ImageService) {}
+
+  @Get(':id')
+  async get(@Param('id') id: string) {
+    const result = await this.service.getImage(id);
+    return result;
+  }
+
+  @Get('/all')
+  async getAll() {
+    const result = await this.service.getAll('');
+    return result;
+  }
 
   @Post()
   @UseInterceptors(FileInterceptor('image'))
