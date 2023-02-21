@@ -1,7 +1,7 @@
 export class UpdateImageDTO {
+  id: string;
   name: string;
   description?: string;
   status?: string;
-  imageId: string;
   listId?: string;
 }
