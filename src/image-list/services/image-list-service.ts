@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { GetAllImageListDTO } from '../dtos/get-all-image-list.dto';
 import { ImageListDTO } from '../dtos/image-list.dto';
 import { NewImageListDTO } from '../dtos/new-image-list.dto';
 import { UpdateImageListDTO } from '../dtos/update-image-list.dto';
@@ -8,6 +9,16 @@ import { ImageListRepository } from '../repositories/image-list.service';
 @Injectable()
 export class ImageListService {
   constructor(private repository: ImageListRepository) {}
+
+  async getAll(userId: string): Promise<GetAllImageListDTO> {
+    const imageListsFound = await this.repository.getAll(userId);
+
+    return Object.assign({} as ImageListDTO, {
+      lists: imageListsFound,
+      count: imageListsFound.length,
+      total: 0,
+    });
+  }
 
   async get(id: string): Promise<ImageListDTO> {
     const imageListFound = await this.repository.get(id);
