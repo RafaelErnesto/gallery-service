@@ -9,6 +9,14 @@ import { ImageListRepository } from '../repositories/image-list.service';
 export class ImageListService {
   constructor(private repository: ImageListRepository) {}
 
+  async get(id: string): Promise<ImageListDTO> {
+    const imageListFound = await this.repository.get(id);
+    if (!imageListFound) {
+      throw new Error('The list was not found');
+    }
+    return Object.assign({} as ImageListDTO, imageListFound);
+  }
+
   async create(newImageListDto: NewImageListDTO): Promise<ImageListDTO> {
     const newImageList = Object.assign({}, newImageListDto) as ImageList;
     const imageList = await this.repository.create(newImageList);
