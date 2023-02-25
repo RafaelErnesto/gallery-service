@@ -63,4 +63,19 @@ describe('ImageListService', () => {
       expect(e.message).toBe('The list was not found');
     }
   });
+
+  it('update should return ImageListDTO when updating is ok', async () => {
+    jest.spyOn(repository, 'get').mockImplementationOnce(async () => {
+      return new ImageList('Dummy list', 'userId', ImageListStatus.ACTIVE);
+    });
+
+    jest.spyOn(repository, 'update').mockImplementationOnce(async () => {
+      return new ImageList('Dummy', 'userId', ImageListStatus.ACTIVE, 'id');
+    });
+
+    const result = await service.update(
+      new UpdateImageListDTO('Dummy', 'userId'),
+    );
+    expect(result.name).toBe('Dummy');
+  });
 });
