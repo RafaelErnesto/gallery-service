@@ -46,4 +46,15 @@ export class ImageListService {
     const imageList = await this.repository.update(newImageList);
     return Object.assign({} as ImageListDTO, imageList);
   }
+
+  async delete(id: string) {
+    const imageListToDelete = await this.repository.get(id);
+    if (!imageListToDelete) {
+      throw new Error('The list was not found');
+    }
+    const inactiveImageList = Object.assign(imageListToDelete, {
+      status: 'INACTIVE',
+    }) as ImageList;
+    await this.repository.delete(inactiveImageList);
+  }
 }

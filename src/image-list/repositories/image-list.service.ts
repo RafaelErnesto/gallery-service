@@ -5,4 +5,5 @@ export abstract class ImageListRepository {
   abstract getAll(userId: string): Promise<ImageList[]>;
   abstract create(data: ImageList): Promise<ImageList>;
   abstract update(data: ImageList): Promise<ImageList>;
+  abstract delete(data: ImageList): Promise<null>;
 }
