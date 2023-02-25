@@ -29,6 +29,12 @@ export class ImageListService {
   }
 
   async create(newImageListDto: NewImageListDTO): Promise<ImageListDTO> {
+    const imageListFound = await this.repository.getByName(
+      newImageListDto.name,
+    );
+    if (imageListFound) {
+      throw new Error('List already exists');
+    }
     const newImageList = Object.assign({}, newImageListDto) as ImageList;
     const imageList = await this.repository.create(newImageList);
     return Object.assign({} as ImageListDTO, imageList);
