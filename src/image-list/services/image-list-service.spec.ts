@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { NewImageListDTO } from '../dtos/new-image-list.dto';
+import { UpdateImageListDTO } from '../dtos/update-image-list.dto';
 import { ImageList } from '../entities/image-list';
 import { ImageListStatus } from '../entities/image-list-status.enum';
 import { ImageListRepositoryMock } from '../repositories/image-list-mock.repository';
@@ -49,5 +50,17 @@ describe('ImageListService', () => {
 
     const result = await service.create(new NewImageListDTO('Dummy', 'userId'));
     expect(result.name).toBe('Dummy');
+  });
+
+  it('update should throw when list was not found', async () => {
+    jest.spyOn(repository, 'get').mockImplementationOnce(async () => {
+      return null;
+    });
+
+    try {
+      await service.update(new UpdateImageListDTO('Dummy list', 'userId'));
+    } catch (e) {
+      expect(e.message).toBe('The list was not found');
+    }
   });
 });
