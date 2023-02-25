@@ -4,7 +4,7 @@ import { ImageListDTO } from '../dtos/image-list.dto';
 import { NewImageListDTO } from '../dtos/new-image-list.dto';
 import { UpdateImageListDTO } from '../dtos/update-image-list.dto';
 import { ImageList } from '../entities/image-list';
-import { ImageListRepository } from '../repositories/image-list.service';
+import { ImageListRepository } from '../repositories/image-list.repository';
 
 @Injectable()
 export class ImageListService {
