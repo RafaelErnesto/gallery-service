@@ -1,15 +1,21 @@
-import { IsAlphanumeric, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsAlphanumeric,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
 export class NewImageListDTO {
   @IsString()
   @IsAlphanumeric()
   @IsNotEmpty()
   name: string;
-  @IsString()
-  @IsAlphanumeric()
+  @IsUUID()
   @IsNotEmpty()
   userId: string;
   @IsString()
+  @IsOptional()
   description?: string;
 
   constructor(name: string, userId: string, description?: string) {
