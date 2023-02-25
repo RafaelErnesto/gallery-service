@@ -131,4 +131,16 @@ describe('ImageListService', () => {
     expect(result.lists.length).toBe(2);
     expect(result.total).toBe(0);
   });
+
+  it('delete should throw when an list was not found', async () => {
+    jest.spyOn(repository, 'get').mockImplementationOnce(async () => {
+      return null;
+    });
+
+    try {
+      await service.delete('id');
+    } catch (e) {
+      expect(e.message).toBe('The list was not found');
+    }
+  });
 });
