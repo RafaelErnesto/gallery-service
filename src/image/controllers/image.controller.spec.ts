@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ImageService } from '../services/image.service';
 import { ImageController } from './image.controller';
-import { ImageRepositoryService } from '../repositories/ImageRepository.service';
-import { ImageStorageRepositoryService } from '../repositories/ImageStorageRepository.service';
-import { ImageRepositoryMock } from '../repositories/ImageRepositoryMock.service';
-import { ImageStorageRepositoryMock } from '../repositories/ImageStorageRepositoryMock.service';
+import { ImageRepositoryService } from '../repositories/image.repository';
+import { ImageStorageRepositoryService } from '../repositories/image-storage.repository';
+import { ImageRepositoryMock } from '../repositories/image-repository-mock.repository';
+import { ImageStorageRepositoryMock } from '../repositories/image-storage-repository-mock.repository';
 
 describe('ImageController', () => {
   let controller: ImageController;

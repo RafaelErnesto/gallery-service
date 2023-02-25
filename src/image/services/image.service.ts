@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { GetAllImageDTO } from '../dtos/getAllImages.dto';
-import { GetImageDTO } from '../dtos/getImage.dto';
-import { NewImageDTO } from '../dtos/newImage.dto';
-import { UpdatedImageDTO } from '../dtos/updatedImage.dto';
-import { UpdateImageDTO } from '../dtos/updateImage.dto';
+import { GetAllImageDTO } from '../dtos/get-all-images.dto';
+import { GetImageDTO } from '../dtos/get-image.dto';
+import { NewImageDTO } from '../dtos/new-image.dto';
+import { UpdatedImageDTO } from '../dtos/updated-image.dto';
+import { UpdateImageDTO } from '../dtos/update-image.dto';
 import { Image } from '../entities/image.entity';
-import { ImageRepositoryService } from '../repositories/ImageRepository.service';
-import { ImageStorageRepositoryService } from '../repositories/ImageStorageRepository.service';
+import { ImageRepositoryService } from '../repositories/image.repository';
+import { ImageStorageRepositoryService } from '../repositories/image-storage.repository';
 
 @Injectable()
 export class ImageService {

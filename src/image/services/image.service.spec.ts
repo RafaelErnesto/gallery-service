@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { NewImageDTO } from '../dtos/newImage.dto';
-import { ImageRepositoryService } from '../repositories/ImageRepository.service';
-import { ImageRepositoryMock } from '../repositories/ImageRepositoryMock.service';
-import { ImageStorageRepositoryService } from '../repositories/ImageStorageRepository.service';
-import { ImageStorageRepositoryMock } from '../repositories/ImageStorageRepositoryMock.service';
+import { NewImageDTO } from '../dtos/new-image.dto';
+import { ImageRepositoryService } from '../repositories/image.repository';
+import { ImageRepositoryMock } from '../repositories/image-repository-mock.repository';
+import { ImageStorageRepositoryService } from '../repositories/image-storage.repository';
+import { ImageStorageRepositoryMock } from '../repositories/image-storage-repository-mock.repository';
 import { ImageService } from './image.service';
 import { Image } from '../entities/image.entity';
-import { UpdateImageDTO } from '../dtos/updateImage.dto';
+import { UpdateImageDTO } from '../dtos/update-image.dto';
 
 describe('ImageService', () => {
   let service: ImageService;

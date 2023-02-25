@@ -1,5 +1,5 @@
 import { Image } from '../entities/image.entity';
-import { ImageRepositoryService } from './ImageRepository.service';
+import { ImageRepositoryService } from './image.repository';
 
 export class DynamoDbImageRepository extends ImageRepositoryService {
   get(imageId: string): Promise<Image> {

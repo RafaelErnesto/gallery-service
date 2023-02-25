@@ -1,4 +1,4 @@
-import { CreateImageResponseDTO } from '../dtos/createImageResponse.dto';
+import { CreateImageResponseDTO } from '../dtos/create-image-response.dto';
 import { Image } from '../entities/image.entity';
 
 export class CreateImageResponseMapper {

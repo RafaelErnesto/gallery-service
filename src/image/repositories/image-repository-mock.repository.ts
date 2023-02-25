@@ -1,5 +1,5 @@
 import { Image } from '../entities/image.entity';
-import { ImageRepositoryService } from './ImageRepository.service';
+import { ImageRepositoryService } from './image.repository';
 
 export class ImageRepositoryMock extends ImageRepositoryService {
   delete(imageId: string): Promise<null> {

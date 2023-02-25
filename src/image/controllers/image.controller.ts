@@ -12,11 +12,11 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { CreateImageRequestDTO } from '../dtos/createImageRequest.dto';
-import { UpdateImageRequestDTO } from '../dtos/updatedImageRequest.dto';
-import { CreateImageRequestMapper } from '../mappers/createImageRequestMapper';
-import { CreateImageResponseMapper } from '../mappers/createImageResponseMapper';
-import { UpdateImageRequestMapper } from '../mappers/updateImageRequestMapper';
+import { CreateImageRequestDTO } from '../dtos/create-image-request.dto';
+import { UpdateImageRequestDTO } from '../dtos/update-image-request.dto';
+import { CreateImageRequestMapper } from '../mappers/create-image-request.mapper';
+import { CreateImageResponseMapper } from '../mappers/create-image-response.mapper';
+import { UpdateImageRequestMapper } from '../mappers/update-image-request.mapper';
 import { ImageService } from '../services/image.service';
 
 const MAX_FILE_SIZE_IN_BYTES = 100000000;

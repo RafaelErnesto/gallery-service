@@ -1,5 +1,5 @@
-import { UpdateImageRequestDTO } from '../dtos/updatedImageRequest.dto';
-import { UpdateImageDTO } from '../dtos/updateImage.dto';
+import { UpdateImageRequestDTO } from '../dtos/update-image-request.dto';
+import { UpdateImageDTO } from '../dtos/update-image.dto';
 
 export class UpdateImageRequestMapper {
   static toUpdateImageDto(
