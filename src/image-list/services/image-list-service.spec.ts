@@ -117,4 +117,18 @@ describe('ImageListService', () => {
     expect(result.lists.length).toBe(0);
     expect(result.total).toBe(0);
   });
+
+  it('getAll should return lists when there are lists', async () => {
+    jest.spyOn(repository, 'getAll').mockImplementationOnce(async () => {
+      return [
+        new ImageList('Dummy 1', 'userId', ImageListStatus.ACTIVE),
+        new ImageList('Dummy 2', 'userId', ImageListStatus.ACTIVE),
+      ];
+    });
+
+    const result = await service.getAll('userId');
+    expect(result.count).toEqual(2);
+    expect(result.lists.length).toBe(2);
+    expect(result.total).toBe(0);
+  });
 });
