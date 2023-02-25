@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ImageListDTO } from '../dtos/image-list.dto';
 import { NewImageListDTO } from '../dtos/new-image-list.dto';
 import { ImageList } from '../entities/image-list';
 import { ImageListStatus } from '../entities/image-list-status.enum';

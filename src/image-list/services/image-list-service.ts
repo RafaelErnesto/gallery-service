@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ImageListDTOBuilder } from '../builders/image-list-dto.builder';
 import { GetAllImageListDTO } from '../dtos/get-all-image-list.dto';
 import { ImageListDTO } from '../dtos/image-list.dto';
 import { NewImageListDTO } from '../dtos/new-image-list.dto';
@@ -12,12 +13,7 @@ export class ImageListService {
 
   async getAll(userId: string): Promise<GetAllImageListDTO> {
     const imageListsFound = await this.repository.getAll(userId);
-
-    return Object.assign({} as ImageListDTO, {
-      lists: imageListsFound,
-      count: imageListsFound.length,
-      total: 0,
-    });
+    return new GetAllImageListDTO(imageListsFound, imageListsFound.length, 0);
   }
 
   async get(id: string): Promise<ImageListDTO> {
@@ -25,7 +21,13 @@ export class ImageListService {
     if (!imageListFound) {
       throw new Error('The list was not found');
     }
-    return Object.assign({} as ImageListDTO, imageListFound);
+    return new ImageListDTOBuilder()
+      .withId(imageListFound.id)
+      .withName(imageListFound.name)
+      .withUserId(imageListFound.userId)
+      .withDescription(imageListFound.description)
+      .withStatus(imageListFound.status)
+      .build();
   }
 
   async create(newImageListDto: NewImageListDTO): Promise<ImageListDTO> {
@@ -37,7 +39,13 @@ export class ImageListService {
     }
     const newImageList = Object.assign({}, newImageListDto) as ImageList;
     const imageList = await this.repository.create(newImageList);
-    return Object.assign({} as ImageListDTO, imageList);
+    return new ImageListDTOBuilder()
+      .withId(imageList.id)
+      .withName(imageList.name)
+      .withUserId(imageList.userId)
+      .withDescription(imageList.description)
+      .withStatus(imageList.status)
+      .build();
   }
 
   async update(updateImageListDto: UpdateImageListDTO): Promise<ImageListDTO> {
@@ -50,7 +58,14 @@ export class ImageListService {
       updateImageListDto,
     ) as ImageList;
     const imageList = await this.repository.update(newImageList);
-    return Object.assign({} as ImageListDTO, imageList);
+
+    return new ImageListDTOBuilder()
+      .withId(imageList.id)
+      .withName(imageList.name)
+      .withUserId(imageList.userId)
+      .withDescription(imageList.description)
+      .withStatus(imageList.status)
+      .build();
   }
 
   async delete(id: string) {
