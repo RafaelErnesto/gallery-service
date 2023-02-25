@@ -78,4 +78,16 @@ describe('ImageListService', () => {
     );
     expect(result.name).toBe('Dummy');
   });
+
+  it('get should throw when an list was not found', async () => {
+    jest.spyOn(repository, 'get').mockImplementationOnce(async () => {
+      return null;
+    });
+
+    try {
+      await service.get('id');
+    } catch (e) {
+      expect(e.message).toBe('The list was not found');
+    }
+  });
 });
