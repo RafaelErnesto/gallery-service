@@ -143,4 +143,17 @@ describe('ImageListService', () => {
       expect(e.message).toBe('The list was not found');
     }
   });
+
+  it('delete should call delete method from repository when list is found', async () => {
+    jest.spyOn(repository, 'get').mockImplementationOnce(async () => {
+      return new ImageList('Dummy 1', 'userId', ImageListStatus.ACTIVE);
+    });
+
+    jest.spyOn(repository, 'delete').mockImplementationOnce(async () => {
+      return null;
+    });
+
+    await service.delete('id');
+    expect(repository.delete).toBeCalledTimes(1);
+  });
 });
