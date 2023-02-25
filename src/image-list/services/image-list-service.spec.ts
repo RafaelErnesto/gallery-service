@@ -106,4 +106,15 @@ describe('ImageListService', () => {
     expect(result).toBeDefined();
     expect(result.id).toBe('id');
   });
+
+  it('getAll should return empty lists when no lists where found', async () => {
+    jest.spyOn(repository, 'getAll').mockImplementationOnce(async () => {
+      return [];
+    });
+
+    const result = await service.getAll('userId');
+    expect(result.count).toEqual(0);
+    expect(result.lists.length).toBe(0);
+    expect(result.total).toBe(0);
+  });
 });
