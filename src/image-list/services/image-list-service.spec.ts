@@ -90,4 +90,20 @@ describe('ImageListService', () => {
       expect(e.message).toBe('The list was not found');
     }
   });
+
+  it('get should return ImageListDTO when list was found', async () => {
+    const entity = new ImageList(
+      'Dummy',
+      'userId',
+      ImageListStatus.ACTIVE,
+      'id',
+    );
+    jest.spyOn(repository, 'get').mockImplementationOnce(async () => {
+      return entity;
+    });
+
+    const result = await service.get(entity.id);
+    expect(result).toBeDefined();
+    expect(result.id).toBe('id');
+  });
 });
