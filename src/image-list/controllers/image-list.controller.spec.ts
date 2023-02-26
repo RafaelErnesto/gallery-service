@@ -87,4 +87,18 @@ describe('ImageListController', () => {
       expect(service.update).toHaveBeenCalledWith(payload);
     });
   });
+
+  describe('ImageListController.delete', () => {
+    it('should call service.delete once with id parameter', async () => {
+      jest
+        .spyOn(service, 'delete')
+        .mockImplementationOnce((): Promise<null> => {
+          return null;
+        });
+      const id = 'testId';
+      await controller.delete(id);
+      expect(service.delete).toHaveBeenCalledTimes(1);
+      expect(service.delete).toHaveBeenCalledWith(id);
+    });
+  });
 });
