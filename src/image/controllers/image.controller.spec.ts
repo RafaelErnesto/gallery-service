@@ -6,6 +6,7 @@ import { ImageStorageRepositoryService } from '../repositories/image-storage.rep
 import { ImageRepositoryMock } from '../repositories/image-repository-mock.repository';
 import { ImageStorageRepositoryMock } from '../repositories/image-storage-repository-mock.repository';
 import { GetImageDTO } from '../dtos/get-image.dto';
+import { GetAllImageDTO } from '../dtos/get-all-images.dto';
 
 describe('ImageController', () => {
   let controller: ImageController;
@@ -33,7 +34,7 @@ describe('ImageController', () => {
   });
 
   describe('ImageController.get', () => {
-    it('should call service.get with id as parameter', async () => {
+    it('should call service.getImage with id as parameter', async () => {
       jest
         .spyOn(service, 'getImage')
         .mockImplementationOnce((): Promise<GetImageDTO> => {
@@ -44,6 +45,21 @@ describe('ImageController', () => {
       await controller.get(id);
       expect(service.getImage).toHaveBeenCalledTimes(1);
       expect(service.getImage).toHaveBeenCalledWith(id);
+    });
+  });
+
+  describe('ImageController.getAll', () => {
+    it('should call service.getAll with userId as parameter', async () => {
+      jest
+        .spyOn(service, 'getAll')
+        .mockImplementationOnce((): Promise<GetAllImageDTO> => {
+          return Object.assign({} as GetAllImageDTO);
+        });
+
+      const userId = 'testId';
+      await controller.getAll(userId);
+      expect(service.getAll).toHaveBeenCalledTimes(1);
+      expect(service.getAll).toHaveBeenCalledWith(userId);
     });
   });
 });

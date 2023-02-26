@@ -31,9 +31,9 @@ export class ImageController {
     return result;
   }
 
-  @Get('/all')
-  async getAll() {
-    const result = await this.service.getAll('');
+  @Get('/all/:userId')
+  async getAll(@Param('userId') userId: string) {
+    const result = await this.service.getAll(userId);
     return result;
   }
 
