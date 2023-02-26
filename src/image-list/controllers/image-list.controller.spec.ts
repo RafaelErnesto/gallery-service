@@ -2,6 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { GetAllImageListDTO } from '../dtos/get-all-image-list.dto';
 import { ImageListDTO } from '../dtos/image-list.dto';
 import { NewImageListDTO } from '../dtos/new-image-list.dto';
+import { UpdateImageListRequestDTO } from '../dtos/update-image-list-request.dto';
+import { UpdateImageListDTO } from '../dtos/update-image-list.dto';
 import { ImageListRepositoryMock } from '../repositories/image-list-mock.repository';
 import { ImageListRepository } from '../repositories/image-list.repository';
 import { ImageListService } from '../services/image-list-service';
@@ -67,6 +69,22 @@ describe('ImageListController', () => {
       await controller.create(payload);
       expect(service.create).toHaveBeenCalledTimes(1);
       expect(service.create).toHaveBeenCalledWith(payload);
+    });
+  });
+
+  describe('ImageListController.update', () => {
+    it('should call service.update once with UpdateImageListDTO parameter', async () => {
+      jest
+        .spyOn(service, 'update')
+        .mockImplementationOnce((): Promise<ImageListDTO> => {
+          return Object.assign({} as ImageListDTO);
+        });
+      const id = 'testId';
+      const body = Object.assign({} as UpdateImageListRequestDTO);
+      const payload = Object.assign({ id, ...body } as UpdateImageListDTO);
+      await controller.update(id, body);
+      expect(service.update).toHaveBeenCalledTimes(1);
+      expect(service.update).toHaveBeenCalledWith(payload);
     });
   });
 });
