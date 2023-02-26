@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { GetAllImageListDTO } from '../dtos/get-all-image-list.dto';
 import { ImageListDTO } from '../dtos/image-list.dto';
 import { ImageListRepositoryMock } from '../repositories/image-list-mock.repository';
 import { ImageListRepository } from '../repositories/image-list.repository';
@@ -31,12 +32,26 @@ describe('ImageListController', () => {
       jest
         .spyOn(service, 'get')
         .mockImplementationOnce((): Promise<ImageListDTO> => {
-          return null;
+          return Object.assign({} as ImageListDTO);
         });
       const id = 'testId';
       await controller.get(id);
       expect(service.get).toHaveBeenCalledTimes(1);
       expect(service.get).toHaveBeenCalledWith(id);
+    });
+  });
+
+  describe('ImageListController.getAll', () => {
+    it('should call service.getAll once with userId parameter', async () => {
+      jest
+        .spyOn(service, 'getAll')
+        .mockImplementationOnce((): Promise<GetAllImageListDTO> => {
+          return Object.assign({} as GetAllImageListDTO);
+        });
+      const userId = 'userId';
+      await controller.getAll(userId);
+      expect(service.getAll).toHaveBeenCalledTimes(1);
+      expect(service.getAll).toHaveBeenCalledWith(userId);
     });
   });
 });
