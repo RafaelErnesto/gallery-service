@@ -82,7 +82,7 @@ describe('ImageController', () => {
   });
 
   describe('ImageController.update', () => {
-    it('should call service.update with one time as parameter', async () => {
+    it('should call service.update with one time', async () => {
       jest
         .spyOn(service, 'update')
         .mockImplementationOnce((): Promise<Image> => {
@@ -93,6 +93,20 @@ describe('ImageController', () => {
       const body = Object.assign({} as UpdateImageRequestDTO);
       await controller.update(id, body);
       expect(service.update).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('ImageController.delete', () => {
+    it('should call service.delete with one time', async () => {
+      jest
+        .spyOn(service, 'delete')
+        .mockImplementationOnce((): Promise<null> => {
+          return null;
+        });
+
+      const id = 'testId';
+      await controller.delete(id);
+      expect(service.delete).toHaveBeenCalledTimes(1);
     });
   });
 });

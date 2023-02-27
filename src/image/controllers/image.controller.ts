@@ -64,4 +64,9 @@ export class ImageController {
     );
     return result;
   }
+
+  @Put(':id')
+  async delete(@Param('id') id: string) {
+    await this.service.delete(id);
+  }
 }
