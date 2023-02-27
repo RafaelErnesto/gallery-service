@@ -5,8 +5,10 @@ import { ImageRepositoryService } from '../repositories/image.repository';
 import { ImageStorageRepositoryService } from '../repositories/image-storage.repository';
 import { ImageRepositoryMock } from '../repositories/image-repository-mock.repository';
 import { ImageStorageRepositoryMock } from '../repositories/image-storage-repository-mock.repository';
-import { GetImageDTO } from '../dtos/get-image.dto';
 import { GetAllImageDTO } from '../dtos/get-all-images.dto';
+import { Image } from '../entities/image.entity';
+import { CreateImageRequestDTO } from '../dtos/create-image-request.dto';
+import { ImageDTO } from '../dtos/image.dto';
 
 describe('ImageController', () => {
   let controller: ImageController;
@@ -37,8 +39,8 @@ describe('ImageController', () => {
     it('should call service.getImage with id as parameter', async () => {
       jest
         .spyOn(service, 'getImage')
-        .mockImplementationOnce((): Promise<GetImageDTO> => {
-          return Object.assign({} as GetImageDTO);
+        .mockImplementationOnce((): Promise<ImageDTO> => {
+          return Object.assign({} as ImageDTO);
         });
 
       const id = 'testId';
@@ -60,6 +62,21 @@ describe('ImageController', () => {
       await controller.getAll(userId);
       expect(service.getAll).toHaveBeenCalledTimes(1);
       expect(service.getAll).toHaveBeenCalledWith(userId);
+    });
+  });
+
+  describe('ImageController.create', () => {
+    it('should call service.create with NewImageDTO as parameter', async () => {
+      jest
+        .spyOn(service, 'create')
+        .mockImplementationOnce((): Promise<Image> => {
+          return Object.assign({} as Image);
+        });
+
+      const file = Object.assign({} as Express.Multer.File);
+      const body = Object.assign({} as CreateImageRequestDTO);
+      await controller.create(file, body);
+      expect(service.create).toHaveBeenCalledTimes(1);
     });
   });
 });

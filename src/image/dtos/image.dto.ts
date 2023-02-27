@@ -1,8 +1,9 @@
-export class GetImageDTO {
+export class ImageDTO {
   id: string;
   name: string;
   description?: string;
-  status?: string;
+  status: string;
+  userId: string;
   listId?: string;
   fileId: string;
 }

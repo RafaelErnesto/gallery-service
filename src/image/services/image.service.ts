@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { GetAllImageDTO } from '../dtos/get-all-images.dto';
-import { GetImageDTO } from '../dtos/get-image.dto';
 import { NewImageDTO } from '../dtos/new-image.dto';
-import { UpdatedImageDTO } from '../dtos/updated-image.dto';
 import { UpdateImageDTO } from '../dtos/update-image.dto';
 import { Image } from '../entities/image.entity';
 import { ImageRepositoryService } from '../repositories/image.repository';
 import { ImageStorageRepositoryService } from '../repositories/image-storage.repository';
+import { ImageDTO } from '../dtos/image.dto';
 
 @Injectable()
 export class ImageService {
@@ -15,22 +14,22 @@ export class ImageService {
     private imageStorageRepository: ImageStorageRepositoryService,
   ) {}
 
-  async create(newImage: NewImageDTO): Promise<Image> {
+  async create(newImage: NewImageDTO): Promise<ImageDTO> {
     const savedImageId = await this.imageStorageRepository.save(newImage.file);
 
     const imageData = Object.assign({}, newImage) as unknown as Image;
     imageData.fileId = savedImageId;
 
-    await this.imageRepository.save(imageData);
-    return imageData;
+    const createdImage = await this.imageRepository.save(imageData);
+    return Object.assign({} as ImageDTO, createdImage);
   }
 
-  async getImage(imageId: string): Promise<GetImageDTO> {
+  async getImage(imageId: string): Promise<ImageDTO> {
     const result = await this.imageRepository.get(imageId);
     if (result == null) {
       throw new Error('Image not found');
     }
-    return Object.assign(new GetImageDTO(), result);
+    return Object.assign({} as ImageDTO, result);
   }
 
   async getAll(userId: string): Promise<GetAllImageDTO> {
@@ -42,7 +41,7 @@ export class ImageService {
     });
   }
 
-  async update(updateImage: UpdateImageDTO): Promise<UpdatedImageDTO> {
+  async update(updateImage: UpdateImageDTO): Promise<ImageDTO> {
     const imageToUpdate = await this.imageRepository.get(updateImage.id);
     if (imageToUpdate == null) throw new Error('Image not found');
 
@@ -52,7 +51,7 @@ export class ImageService {
     ) as unknown as Image;
 
     const updatedImage = await this.imageRepository.update(newImageData);
-    return Object.assign({} as UpdatedImageDTO, {
+    return Object.assign({} as ImageDTO, {
       imageId: updatedImage.id,
       ...updatedImage,
     });

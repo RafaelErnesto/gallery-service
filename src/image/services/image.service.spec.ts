@@ -41,12 +41,12 @@ describe('ImageService', () => {
     jest
       .spyOn(imageStorageRepository, 'save')
       .mockImplementationOnce(async () => 'imageId');
-    jest
-      .spyOn(imageRepository, 'save')
-      .mockImplementationOnce(async () => null);
+    jest.spyOn(imageRepository, 'save').mockImplementationOnce(async () => {
+      return Object.assign({} as Image, { fileId: 'fileId' });
+    });
     const result = await service.create(new NewImageDTO());
 
-    expect(result.fileId).toBe('imageId');
+    expect(result.fileId).toBe('fileId');
     expect(imageStorageRepository.save).toHaveBeenCalled();
     expect(imageRepository.save).toHaveBeenCalled();
   });

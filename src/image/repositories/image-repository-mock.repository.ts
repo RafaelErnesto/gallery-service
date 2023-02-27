@@ -14,7 +14,7 @@ export class ImageRepositoryMock extends ImageRepositoryService {
   get(imageId: string): Promise<Image> {
     throw new Error('Method not implemented.');
   }
-  save(image: Image): Promise<null> {
+  save(image: Image): Promise<Image> {
     return null;
   }
 }
