@@ -9,6 +9,7 @@ import { GetAllImageDTO } from '../dtos/get-all-images.dto';
 import { Image } from '../entities/image.entity';
 import { CreateImageRequestDTO } from '../dtos/create-image-request.dto';
 import { ImageDTO } from '../dtos/image.dto';
+import { UpdateImageRequestDTO } from '../dtos/update-image-request.dto';
 
 describe('ImageController', () => {
   let controller: ImageController;
@@ -77,6 +78,21 @@ describe('ImageController', () => {
       const body = Object.assign({} as CreateImageRequestDTO);
       await controller.create(file, body);
       expect(service.create).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('ImageController.update', () => {
+    it('should call service.update with one time as parameter', async () => {
+      jest
+        .spyOn(service, 'update')
+        .mockImplementationOnce((): Promise<Image> => {
+          return Object.assign({} as Image);
+        });
+
+      const id = 'testId';
+      const body = Object.assign({} as UpdateImageRequestDTO);
+      await controller.update(id, body);
+      expect(service.update).toHaveBeenCalledTimes(1);
     });
   });
 });

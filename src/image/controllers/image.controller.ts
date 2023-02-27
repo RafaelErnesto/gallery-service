@@ -58,7 +58,7 @@ export class ImageController {
   }
 
   @Put(':id')
-  async updated(@Param('id') id: string, @Body() body: UpdateImageRequestDTO) {
+  async update(@Param('id') id: string, @Body() body: UpdateImageRequestDTO) {
     const result = await this.service.update(
       UpdateImageRequestMapper.toUpdateImageDto(body, id),
     );
