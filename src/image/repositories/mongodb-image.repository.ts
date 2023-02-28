@@ -13,20 +13,26 @@ export class MongoDbImageRepository extends ImageRepositoryService {
   ) {
     super();
   }
-  async get(imageId: string): Promise<Image> {
-    const foundImage = await this.imageModel.findById(imageId).exec();
+  async get(id: string): Promise<Image> {
+    const foundImage = await this.imageModel.findById(id).exec();
     return Object.assign({} as Image, foundImage);
   }
   async getAll(userId: string): Promise<Image[]> {
     return await this.imageModel.find({ userId: userId }).exec();
   }
   async update(updateData: Image): Promise<Image> {
-    return await this.imageModel.updateOne({ id: updateData.id }, updatedData);
+    const updatedImage = await this.imageModel.findByIdAndUpdate(
+      updateData.id,
+      updateData,
+    );
+    return Object.assign({} as Image, updatedImage);
   }
-  delete(imageId: string): Promise<null> {
-    throw new Error('Method not implemented.');
+  async delete(id: string): Promise<null> {
+    await this.imageModel.findByIdAndDelete(id);
+    return null;
   }
-  save(image: Image): Promise<null> {
-    throw new Error('Method not implemented.');
+  async save(image: Image): Promise<Image> {
+    const createdImage = await this.imageModel.create(image);
+    return Object.assign({} as Image, createdImage);
   }
 }
