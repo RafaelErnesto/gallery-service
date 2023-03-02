@@ -33,6 +33,14 @@ export class MongoDbImageRepository extends ImageRepositoryService {
   }
   async save(image: Image): Promise<Image> {
     const createdImage = await this.imageModel.create(image);
-    return Object.assign({} as Image, createdImage);
+    return Object.assign({} as Image, {
+      id: createdImage._id,
+      name: createdImage.name,
+      fileId: createdImage.fileId,
+      description: createdImage.description,
+      listId: createdImage.listId,
+      status: createdImage.status,
+      userId: createdImage.userId,
+    });
   }
 }
