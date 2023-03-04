@@ -8,6 +8,7 @@ import { ImageSchema } from '../database/schemas/image.schema';
 import { MongoDbImageRepository } from './mongodb-image.repository';
 import { Image } from '../entities/image.entity';
 import { ImageStatus } from '../enums/image-status.enum';
+import mongoose from 'mongoose';
 
 describe('MongoDbImageRepository', () => {
   let repository: MongoDbImageRepository;
@@ -37,6 +38,13 @@ describe('MongoDbImageRepository', () => {
       const savedImage = await repository.save(imageToBeSaved);
       expect(savedImage.name).toBe(imageToBeSaved.name);
       expect(savedImage.id).toBeDefined();
+    });
+  });
+  describe('get should', () => {
+    it('return null when the image does not exist', async () => {
+      const fakeId = new mongoose.Types.ObjectId();
+      const imageFound = await repository.get(fakeId.toString());
+      expect(imageFound).toBeNull();
     });
   });
 });
