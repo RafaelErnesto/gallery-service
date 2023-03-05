@@ -40,6 +40,31 @@ describe('MongoDbImageRepository', () => {
       expect(savedImage.id).toBeDefined();
     });
   });
+  describe('update should', () => {
+    it('should return null when image was not found', async () => {
+      const imageToUpdate = Object.assign({} as Image, {
+        name: 'Dummy',
+        status: ImageStatus.ACTIVE,
+        userId: 'userTestId',
+        fileId: 'testFileId',
+        id: new mongoose.Types.ObjectId().toString(),
+      });
+      const result = await repository.update(imageToUpdate);
+      expect(result).toBeNull();
+    });
+    it('update Image and return the Image entity when Image update is ok', async () => {
+      const imageToSave = Object.assign({} as Image, {
+        name: 'Dummy',
+        status: ImageStatus.ACTIVE,
+        userId: 'userTestId',
+        fileId: 'testFileId',
+      });
+      const savedImage = await repository.save(imageToSave);
+      savedImage.name = 'Dummy Updated';
+      const updatedImage = await repository.update(savedImage);
+      expect(updatedImage.name).toBe('Dummy Updated');
+    });
+  });
   describe('get should', () => {
     it('return null when the image does not exist', async () => {
       const fakeId = new mongoose.Types.ObjectId();

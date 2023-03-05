@@ -24,11 +24,12 @@ export class MongoDbImageRepository extends ImageRepositoryService {
     return result.map((item) => this.parseToImage(item));
   }
   async update(updateData: Image): Promise<Image> {
-    const updatedImage = await this.imageModel.findByIdAndUpdate(
+    const foundImage = await this.imageModel.findByIdAndUpdate(
       updateData.id,
       updateData,
     );
-    return this.parseToImage(updatedImage);
+    if (!foundImage) return null;
+    return this.parseToImage(updateData);
   }
   async delete(id: string): Promise<null> {
     await this.imageModel.findByIdAndDelete(id);
