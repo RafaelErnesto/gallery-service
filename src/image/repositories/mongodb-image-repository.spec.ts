@@ -58,4 +58,28 @@ describe('MongoDbImageRepository', () => {
       expect(imageFound.id).toEqual(insertedImage.id);
     });
   });
+  describe('getAll should', () => {
+    it('return empty when there is no image', async () => {
+      const result = await repository.getAll('dummy');
+      expect(result.length).toBe(0);
+    });
+    it('return image when the image exist', async () => {
+      const image1 = Object.assign({} as Image, {
+        name: 'Dummy1',
+        status: ImageStatus.ACTIVE,
+        userId: '123',
+        fileId: 'testFileId',
+      });
+      const image2 = Object.assign({} as Image, {
+        name: 'Dummy2',
+        status: ImageStatus.ACTIVE,
+        userId: '123',
+        fileId: 'testFileId',
+      });
+      await repository.save(image1);
+      await repository.save(image2);
+      const result = await repository.getAll('123');
+      expect(result.length).toEqual(2);
+    });
+  });
 });
