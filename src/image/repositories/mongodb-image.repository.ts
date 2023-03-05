@@ -16,25 +16,19 @@ export class MongoDbImageRepository extends ImageRepositoryService {
   async get(id: string): Promise<Image> {
     const imageFound = await this.imageModel.findById(id);
     if (!imageFound) return null;
-    return Object.assign({} as Image, {
-      id: imageFound._id,
-      name: imageFound.name,
-      fileId: imageFound.fileId,
-      description: imageFound.description,
-      listId: imageFound.listId,
-      status: imageFound.status,
-      userId: imageFound.userId,
-    });
+    return this.parseToImage(imageFound);
   }
   async getAll(userId: string): Promise<Image[]> {
-    return await this.imageModel.find({ userId: userId }).exec();
+    const result = await this.imageModel.find({ userId: userId });
+    if (!result) return [];
+    return result.map((item) => this.parseToImage(item));
   }
   async update(updateData: Image): Promise<Image> {
     const updatedImage = await this.imageModel.findByIdAndUpdate(
       updateData.id,
       updateData,
     );
-    return Object.assign({} as Image, updatedImage);
+    return this.parseToImage(updatedImage);
   }
   async delete(id: string): Promise<null> {
     await this.imageModel.findByIdAndDelete(id);
@@ -42,14 +36,18 @@ export class MongoDbImageRepository extends ImageRepositoryService {
   }
   async save(image: Image): Promise<Image> {
     const createdImage = await this.imageModel.create(image);
+    return this.parseToImage(createdImage);
+  }
+
+  private parseToImage(data) {
     return Object.assign({} as Image, {
-      id: createdImage._id,
-      name: createdImage.name,
-      fileId: createdImage.fileId,
-      description: createdImage.description,
-      listId: createdImage.listId,
-      status: createdImage.status,
-      userId: createdImage.userId,
+      id: data._id,
+      name: data.name,
+      fileId: data.fileId,
+      description: data.description,
+      listId: data.listId,
+      status: data.status,
+      userId: data.userId,
     });
   }
 }
