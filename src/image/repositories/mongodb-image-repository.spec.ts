@@ -40,6 +40,7 @@ describe('MongoDbImageRepository', () => {
       expect(savedImage.id).toBeDefined();
     });
   });
+
   describe('update should', () => {
     it('should return null when image was not found', async () => {
       const imageToUpdate = Object.assign({} as Image, {
