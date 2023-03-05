@@ -14,7 +14,7 @@ export class MongoDbImageRepository extends ImageRepositoryService {
     super();
   }
   async get(id: string): Promise<Image> {
-    const imageFound = await this.imageModel.findById(id).exec();
+    const imageFound = await this.imageModel.findById(id);
     if (!imageFound) return null;
     return Object.assign({} as Image, {
       id: imageFound._id,

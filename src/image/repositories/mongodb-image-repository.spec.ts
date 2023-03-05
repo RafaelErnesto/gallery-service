@@ -46,5 +46,16 @@ describe('MongoDbImageRepository', () => {
       const imageFound = await repository.get(fakeId.toString());
       expect(imageFound).toBeNull();
     });
+    it('return image when the image exist', async () => {
+      const image = Object.assign({} as Image, {
+        name: 'Dummy',
+        status: ImageStatus.ACTIVE,
+        userId: 'userTestId',
+        fileId: 'testFileId',
+      });
+      const insertedImage = await repository.save(image);
+      const imageFound = await repository.get(insertedImage.id);
+      expect(imageFound.id).toEqual(insertedImage.id);
+    });
   });
 });
