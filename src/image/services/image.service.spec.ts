@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { NewImageDTO } from '../dtos/new-image.dto';
 import { ImageRepositoryService } from '../repositories/image.repository';
-import { ImageRepositoryMock } from '../repositories/image-repository-mock.repository';
+import { ImageRepositoryMock } from '../repositories/mocks/image-repository-mock.repository';
 import { ImageStorageRepositoryService } from '../repositories/image-storage.repository';
-import { ImageStorageRepositoryMock } from '../repositories/image-storage-repository-mock.repository';
+import { ImageStorageRepositoryMock } from '../repositories/mocks/image-storage-repository-mock.repository';
 import { ImageService } from './image.service';
 import { Image } from '../entities/image.entity';
 import { UpdateImageDTO } from '../dtos/update-image.dto';
