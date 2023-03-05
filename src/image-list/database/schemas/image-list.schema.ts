@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
-import { ImageListStatus } from 'src/image-list/entities/image-list-status.enum';
+import { ImageListStatus } from '../../../image-list/entities/image-list-status.enum';
 
 export type ImageListDocument = HydratedDocument<ImageList>;
 
