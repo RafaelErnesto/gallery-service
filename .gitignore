@@ -35,3 +35,6 @@ lerna-debug.log*
 
 #Localstack
 volume/
+infra-resources/local/.terraform/
+infra-resources/local/.terraform*
+infra-resources/local/*terraform*
