@@ -9,7 +9,7 @@ services:
       - "127.0.0.1:4510-4559:4510-4559"
       - "8080:8080"
     environment:
-      - SERVICES=iam,s3,lambda,logs
+      - SERVICES=iam,s3,lambda,logs,apigateway
       - DEBUG=${DEBUG-}
       - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR-}
       - DOCKER_HOST=unix:///var/run/docker.sock
