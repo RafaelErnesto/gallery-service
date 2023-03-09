@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   localstack:
-    container_name: "localstack_main"
+    container_name: "local-environment"
     image: localstack/localstack
     ports:
       - "127.0.0.1:4566:4566"      
@@ -17,4 +17,12 @@ services:
     volumes:
       - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
+  
+  mongo:
+    container_name: "local-db"
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
 

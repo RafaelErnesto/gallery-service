@@ -54,6 +54,6 @@ resource "aws_lambda_function" "gallery-service" {
   handler       = "main"
   role          = aws_iam_role.fake_lambda_role.arn
   runtime       = "nodejs16.x"
-  timeout       = 300
+  timeout       = 1
   memory_size   = 128
 }
