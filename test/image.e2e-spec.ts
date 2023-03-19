@@ -1,23 +1,23 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
+import { ImageModule } from '../src/image/image.module';
 
-describe('AppController (e2e)', () => {
+describe('ImageController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [ImageModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  it('image/ (GET)', () => {
     return request(app.getHttpServer())
-      .get('/')
+      .get('image/')
       .expect(200)
       .expect('Hello World!');
   });
