@@ -17,6 +17,7 @@ import { UpdateImageRequestDTO } from '../dtos/update-image-request.dto';
 import { CreateImageRequestMapper } from '../mappers/create-image-request.mapper';
 import { CreateImageResponseMapper } from '../mappers/create-image-response.mapper';
 import { UpdateImageRequestMapper } from '../mappers/update-image-request.mapper';
+import { ValidateImageIdPipe } from '../pipes/validate-image-id.pipe';
 import { ImageService } from '../services/image.service';
 
 const MAX_FILE_SIZE_IN_BYTES = 100000000;
@@ -26,7 +27,10 @@ export class ImageController {
   constructor(private service: ImageService) {}
 
   @Get(':id')
-  async get(@Param('id') id: string) {
+  async get(
+    @Param('id', ValidateImageIdPipe)
+    id: string,
+  ) {
     const result = await this.service.getImage(id);
     return result;
   }
