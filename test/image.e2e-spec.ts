@@ -21,6 +21,7 @@ describe('ImageController (e2e)', () => {
 
   afterAll(async () => {
     await closeInMongodConnection();
+    await app.close();
   });
 
   describe('GET image', () => {
