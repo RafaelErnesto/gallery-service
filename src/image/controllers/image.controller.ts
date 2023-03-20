@@ -9,9 +9,11 @@ import {
   Post,
   Put,
   UploadedFile,
+  UseFilters,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { HttpExceptionFilter } from '../../filters/http-exception.filter';
 import { CreateImageRequestDTO } from '../dtos/create-image-request.dto';
 import { UpdateImageRequestDTO } from '../dtos/update-image-request.dto';
 import { CreateImageRequestMapper } from '../mappers/create-image-request.mapper';
@@ -22,6 +24,7 @@ import { ImageService } from '../services/image.service';
 
 const MAX_FILE_SIZE_IN_BYTES = 100000000;
 
+@UseFilters(new HttpExceptionFilter())
 @Controller('image')
 export class ImageController {
   constructor(private service: ImageService) {}

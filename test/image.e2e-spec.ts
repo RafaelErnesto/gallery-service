@@ -6,6 +6,7 @@ import {
   closeInMongodConnection,
 } from '../src/utils/in-memory-mongodb/in-memory-mongodb.utils';
 import { ImageModule } from '../src/image/image.module';
+import mongoose from 'mongoose';
 
 describe('ImageController (e2e)', () => {
   let app: INestApplication;
@@ -28,6 +29,15 @@ describe('ImageController (e2e)', () => {
 
       expect(response.statusCode).toBe(400);
       expect(response.body.message).toBe('test is not a valid id');
+    });
+    it('should return statusCode 404 when image was not found', async () => {
+      const mockedId = new mongoose.Types.ObjectId();
+      const response = await request(app.getHttpServer()).get(
+        `/image/${mockedId.toString()}`,
+      );
+
+      expect(response.statusCode).toBe(404);
+      expect(response.body.message).toBe('Image not found');
     });
   });
 });

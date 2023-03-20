@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { GetAllImageDTO } from '../dtos/get-all-images.dto';
 import { NewImageDTO } from '../dtos/new-image.dto';
 import { UpdateImageDTO } from '../dtos/update-image.dto';
@@ -27,7 +27,7 @@ export class ImageService {
   async getImage(imageId: string): Promise<ImageDTO> {
     const result = await this.imageRepository.get(imageId);
     if (result == null) {
-      throw new Error('Image not found');
+      throw new NotFoundException({ message: 'Image not found' });
     }
     return Object.assign({} as ImageDTO, result);
   }
@@ -43,7 +43,8 @@ export class ImageService {
 
   async update(updateImage: UpdateImageDTO): Promise<ImageDTO> {
     const imageToUpdate = await this.imageRepository.get(updateImage.id);
-    if (imageToUpdate == null) throw new Error('Image not found');
+    if (imageToUpdate == null)
+      throw new NotFoundException({ message: 'Image not found' });
 
     const newImageData = Object.assign(
       imageToUpdate,
@@ -60,7 +61,7 @@ export class ImageService {
   async delete(imageId: string): Promise<null> {
     const imageToDelete = await this.imageRepository.get(imageId);
     if (imageToDelete == null) {
-      throw new Error('Image not found');
+      throw new NotFoundException({ message: 'Image not found' });
     }
 
     await this.imageRepository.delete(imageToDelete.id);
