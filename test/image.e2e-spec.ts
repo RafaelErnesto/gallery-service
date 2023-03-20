@@ -41,4 +41,22 @@ describe('ImageController (e2e)', () => {
       expect(response.body.message).toBe('Image not found');
     });
   });
+  describe('GET image/all', () => {
+    it('should return statusCode 400 when user id is not valid', async () => {
+      const response = await request(app.getHttpServer()).get(
+        '/image/all/test',
+      );
+
+      expect(response.statusCode).toBe(400);
+      expect(response.body.message).toBe('test is not a valid user id');
+    });
+    it('should return statusCode 200 and empty array when there is not data for the user', async () => {
+      const response = await request(app.getHttpServer()).get(
+        `/image/all/18d87054-59a5-40d6-868c-ca805ff6f9b8`,
+      );
+
+      expect(response.statusCode).toBe(200);
+      expect(response.body.images.length).toBe(0);
+    });
+  });
 });

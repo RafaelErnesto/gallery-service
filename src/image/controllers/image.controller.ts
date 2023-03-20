@@ -20,6 +20,7 @@ import { CreateImageRequestMapper } from '../mappers/create-image-request.mapper
 import { CreateImageResponseMapper } from '../mappers/create-image-response.mapper';
 import { UpdateImageRequestMapper } from '../mappers/update-image-request.mapper';
 import { ValidateImageIdPipe } from '../pipes/validate-image-id.pipe';
+import { ValidateUserIdPipe } from '../pipes/validate-user-id.pipe';
 import { ImageService } from '../services/image.service';
 
 const MAX_FILE_SIZE_IN_BYTES = 100000000;
@@ -39,7 +40,7 @@ export class ImageController {
   }
 
   @Get('/all/:userId')
-  async getAll(@Param('userId') userId: string) {
+  async getAll(@Param('userId', ValidateUserIdPipe) userId: string) {
     const result = await this.service.getAll(userId);
     return result;
   }
