@@ -59,4 +59,24 @@ describe('ImageController (e2e)', () => {
       expect(response.body.images.length).toBe(0);
     });
   });
+  describe('POST image', () => {
+    it('should return statusCode 400 when file is empty', async () => {
+      const response = await request(app.getHttpServer())
+        .post('/image/')
+        .send({});
+
+      expect(response.statusCode).toBe(400);
+      expect(response.body.message).toBe('File is required');
+    });
+    it('should return statusCode 400 when name is empty', async () => {
+      const buffer = Buffer.from('TEST');
+      const response = await request(app.getHttpServer())
+        .post('/image/')
+        .field('name', '')
+        .attach('file', buffer, 'test-file.txt');
+
+      expect(response.statusCode).toBe(400);
+      expect(response.body.message).toBe('test is not a valid user id');
+    });
+  });
 });
