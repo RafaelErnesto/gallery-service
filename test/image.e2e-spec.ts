@@ -1,15 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
+import { promises } from 'fs';
 import {
   rootMongooseTestModule,
   closeInMongodConnection,
 } from '../src/utils/in-memory-mongodb/in-memory-mongodb.utils';
 import { ImageModule } from '../src/image/image.module';
 import mongoose from 'mongoose';
+import { join } from 'path';
 
 describe('ImageController (e2e)', () => {
   let app: INestApplication;
+  let mockedImage;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -17,6 +20,9 @@ describe('ImageController (e2e)', () => {
     }).compile();
     app = moduleFixture.createNestApplication();
     await app.init();
+    mockedImage = await promises.readFile(
+      join(__dirname, './image-mock/mock.png'),
+    );
   });
 
   afterAll(async () => {
@@ -69,14 +75,19 @@ describe('ImageController (e2e)', () => {
       expect(response.body.message).toBe('File is required');
     });
     it('should return statusCode 400 when name is empty', async () => {
-      const buffer = Buffer.from('TEST');
       const response = await request(app.getHttpServer())
         .post('/image/')
         .field('name', '')
-        .attach('file', buffer, 'test-file.txt');
+        .attach('image', mockedImage, 'mock.jpg');
 
       expect(response.statusCode).toBe(400);
-      expect(response.body.message).toBe('test is not a valid user id');
+    });
+    it('should return statusCode 400 when name is smaller than 5 characters', async () => {
+      const response = await request(app.getHttpServer())
+        .post('/image/')
+        .field('name', '1234')
+        .attach('image', mockedImage, 'mock.jpg');
+      expect(response.statusCode).toBe(400);
     });
   });
 });

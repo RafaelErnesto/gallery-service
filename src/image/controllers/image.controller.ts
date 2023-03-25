@@ -11,6 +11,7 @@ import {
   UploadedFile,
   UseFilters,
   UseInterceptors,
+  ValidationPipe,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { HttpExceptionFilter } from '../../filters/http-exception.filter';
@@ -57,7 +58,7 @@ export class ImageController {
       }),
     )
     image: Express.Multer.File,
-    @Body() body: CreateImageRequestDTO,
+    @Body(ValidationPipe) body: CreateImageRequestDTO,
   ) {
     const result = await this.service.create(
       CreateImageRequestMapper.toNewImageDto(body, image),
