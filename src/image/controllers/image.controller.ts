@@ -11,7 +11,6 @@ import {
   UploadedFile,
   UseFilters,
   UseInterceptors,
-  ValidationPipe,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { HttpExceptionFilter } from '../../filters/http-exception.filter';

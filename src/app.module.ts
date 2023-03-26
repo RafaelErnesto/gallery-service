@@ -1,13 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ImageModule } from './image/image.module';
 import { ImageListModule } from './image-list/image-list.module';
-import { MongooseModule } from '@nestjs/mongoose';
+import { getMongooseModule } from './utils/mongodb.utils';
 
 @Module({
-  imports: [
-    ImageModule,
-    ImageListModule,
-    MongooseModule.forRoot('mongodb://local-db:27017/local'),
-  ],
+  imports: [ImageModule, ImageListModule, getMongooseModule()],
 })
 export class AppModule {}

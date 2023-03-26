@@ -9,6 +9,7 @@ import {
 import { ImageModule } from '../src/image/image.module';
 import mongoose from 'mongoose';
 import { join } from 'path';
+import { AppModule } from '../src/app.module';
 
 describe('ImageController (e2e)', () => {
   let app: INestApplication;
@@ -16,7 +17,7 @@ describe('ImageController (e2e)', () => {
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [rootMongooseTestModule(), ImageModule],
+      imports: [rootMongooseTestModule(), AppModule],
     }).compile();
     app = moduleFixture.createNestApplication();
     await app.init();
