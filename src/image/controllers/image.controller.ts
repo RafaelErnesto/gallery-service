@@ -58,7 +58,7 @@ export class ImageController {
       }),
     )
     image: Express.Multer.File,
-    @Body(ValidationPipe) body: CreateImageRequestDTO,
+    @Body() body: CreateImageRequestDTO,
   ) {
     const result = await this.service.create(
       CreateImageRequestMapper.toNewImageDto(body, image),
