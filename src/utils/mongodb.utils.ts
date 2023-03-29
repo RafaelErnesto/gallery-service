@@ -8,7 +8,8 @@ export const getMongooseModule = (
 ): DynamicModule => {
   return MongooseModule.forRootAsync({
     useFactory: async () => {
-      return await mongoServer[process.env.ENV](options);
+      console.log(process.env.NODE_ENV);
+      return await mongoServer[process.env.NODE_ENV](options);
     },
   });
 };
@@ -18,7 +19,7 @@ export const closeInMongodConnection = async () => {
 };
 
 const mongoServer = {
-  TEST: async (options: MongooseModuleOptions = {}) => {
+  test: async (options: MongooseModuleOptions = {}) => {
     mongod = await MongoMemoryServer.create();
     const mongoUri = mongod.getUri();
     return {
@@ -26,13 +27,13 @@ const mongoServer = {
       ...options,
     };
   },
-  LOCAL: async (options: MongooseModuleOptions = {}) => {
+  development: async (options: MongooseModuleOptions = {}) => {
     return {
       uri: 'mongodb://local-db:27017/local',
       ...options,
     };
   },
-  PROD: async (options: MongooseModuleOptions = {}) => {
+  prod: async (options: MongooseModuleOptions = {}) => {
     return {
       uri: 'mongodb://local-db:27017/local',
       ...options,
