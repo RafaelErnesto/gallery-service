@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
 import { promises } from 'fs';
 import mongoose from 'mongoose';
@@ -16,6 +16,11 @@ describe('ImageController (e2e)', () => {
       imports: [AppModule],
     }).compile();
     app = moduleFixture.createNestApplication();
+    app.useGlobalPipes(
+      new ValidationPipe({
+        skipNullProperties: true,
+      }),
+    );
     await app.init();
     mockedImage = await promises.readFile(
       join(__dirname, './image-mock/mock.png'),
@@ -66,7 +71,7 @@ describe('ImageController (e2e)', () => {
     it('should return statusCode 400 when file is empty', async () => {
       const response = await request(app.getHttpServer())
         .post('/image/')
-        .send({});
+        .send({ name: 'Teste' });
 
       expect(response.statusCode).toBe(400);
       expect(response.body.message).toBe('File is required');
@@ -78,6 +83,9 @@ describe('ImageController (e2e)', () => {
         .attach('image', mockedImage, 'mock.jpg');
 
       expect(response.statusCode).toBe(400);
+      expect(
+        response.body.message.includes('name should not be empty'),
+      ).toBeTruthy();
     });
     it('should return statusCode 400 when name is smaller than 5 characters', async () => {
       const response = await request(app.getHttpServer())

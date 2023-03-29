@@ -8,7 +8,6 @@ export const getMongooseModule = (
 ): DynamicModule => {
   return MongooseModule.forRootAsync({
     useFactory: async () => {
-      console.log(process.env.NODE_ENV);
       return await mongoServer[process.env.NODE_ENV](options);
     },
   });
