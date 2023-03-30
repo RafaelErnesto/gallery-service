@@ -121,5 +121,22 @@ describe('ImageController (e2e)', () => {
         response.body.message.includes('status should not be empty'),
       ).toBeFalsy();
     });
+    it('should return statusCode 400 when name is invalid', async () => {
+      const response = await request(app.getHttpServer())
+        .put('/image/:dummy')
+        .send({ name: 'a%' });
+      expect(response.statusCode).toBe(400);
+      expect(
+        response.body.message.includes(
+          'name must contain only letters and numbers',
+        ),
+      ).toBeTruthy();
+      expect(
+        response.body.message.includes('status should not be empty'),
+      ).toBeFalsy();
+      expect(
+        response.body.message.includes('description should not be empty'),
+      ).toBeFalsy();
+    });
   });
 });
