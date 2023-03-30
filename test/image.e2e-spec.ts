@@ -94,5 +94,32 @@ describe('ImageController (e2e)', () => {
         .attach('image', mockedImage, 'mock.jpg');
       expect(response.statusCode).toBe(400);
     });
+    it('should return statusCode 400 when name contains non-alphanumeric characters', async () => {
+      const response = await request(app.getHttpServer())
+        .post('/image/')
+        .field('name', '123%4')
+        .attach('image', mockedImage, 'mock.jpg');
+      expect(response.statusCode).toBe(400);
+      expect(
+        response.body.message.includes(
+          'name must contain only letters and numbers',
+        ),
+      ).toBeTruthy();
+    });
+  });
+
+  describe('UPDATE image', () => {
+    it('should return statusCode 400 when name is empty', async () => {
+      const response = await request(app.getHttpServer())
+        .put('/image/:dummy')
+        .send({ name: '' });
+      expect(response.statusCode).toBe(400);
+      expect(
+        response.body.message.includes('name should not be empty'),
+      ).toBeTruthy();
+      expect(
+        response.body.message.includes('status should not be empty'),
+      ).toBeFalsy();
+    });
   });
 });
