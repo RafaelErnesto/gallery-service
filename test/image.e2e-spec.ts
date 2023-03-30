@@ -111,7 +111,7 @@ describe('ImageController (e2e)', () => {
   describe('UPDATE image', () => {
     it('should return statusCode 400 when name is empty', async () => {
       const response = await request(app.getHttpServer())
-        .put('/image/:dummy')
+        .put('/image/6424d89b940020d2af3e4117')
         .send({ name: '' });
       expect(response.statusCode).toBe(400);
       expect(
@@ -123,7 +123,7 @@ describe('ImageController (e2e)', () => {
     });
     it('should return statusCode 400 when name is invalid', async () => {
       const response = await request(app.getHttpServer())
-        .put('/image/:dummy')
+        .put('/image/6424d89b940020d2af3e4117')
         .send({ name: 'a%' });
       expect(response.statusCode).toBe(400);
       expect(
@@ -140,7 +140,7 @@ describe('ImageController (e2e)', () => {
     });
     it('should return statusCode 400 when description is invalid', async () => {
       const response = await request(app.getHttpServer())
-        .put('/image/:dummy')
+        .put('/image/6424d89b940020d2af3e4117')
         .send({ description: 'a%' });
       expect(response.statusCode).toBe(400);
       expect(
@@ -154,6 +154,14 @@ describe('ImageController (e2e)', () => {
       expect(
         response.body.message.includes('name should not be empty'),
       ).toBeFalsy();
+    });
+  });
+  describe('DELETE image', () => {
+    it('should return statusCode 400 when id is invalid', async () => {
+      const response = await request(app.getHttpServer()).delete('/image/test');
+
+      expect(response.statusCode).toBe(400);
+      expect(response.body.message).toBe('test is not a valid id');
     });
   });
 });

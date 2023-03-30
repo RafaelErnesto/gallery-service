@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   FileTypeValidator,
   Get,
   MaxFileSizeValidator,
@@ -66,15 +67,18 @@ export class ImageController {
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() body: UpdateImageRequestDTO) {
+  async update(
+    @Param('id', ValidateImageIdPipe) id: string,
+    @Body() body: UpdateImageRequestDTO,
+  ) {
     const result = await this.service.update(
       UpdateImageRequestMapper.toUpdateImageDto(body, id),
     );
     return result;
   }
 
-  @Put(':id')
-  async delete(@Param('id') id: string) {
+  @Delete(':id')
+  async delete(@Param('id', ValidateImageIdPipe) id: string) {
     await this.service.delete(id);
   }
 }
