@@ -2,8 +2,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import {
   closeInMongodConnection,
-  rootMongooseTestModule,
-} from '../../utils/in-memory-mongodb/in-memory-mongodb.utils';
+  getMongooseModule,
+} from '../../utils/mongodb.utils';
 
 import mongoose from 'mongoose';
 import { MongoDbImageListRepository } from './mongodb-image-list.repository';
@@ -16,7 +16,7 @@ describe('MongoDbImageRepository', () => {
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        rootMongooseTestModule(),
+        getMongooseModule(),
         MongooseModule.forFeature([
           { name: 'ImageList', schema: ImageListSchema },
         ]),
