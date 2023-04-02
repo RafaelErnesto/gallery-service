@@ -15,6 +15,8 @@ export class NewImageListDTO {
   @IsNotEmpty()
   userId: string;
   @IsString()
+  @IsAlphanumeric()
+  @IsNotEmpty()
   @IsOptional()
   description?: string;
 
