@@ -13,6 +13,7 @@ import { ImageListDTO } from '../dtos/image-list.dto';
 import { NewImageListDTO } from '../dtos/new-image-list.dto';
 import { UpdateImageListRequestDTO } from '../dtos/update-image-list-request.dto';
 import { UpdateImageListDTO } from '../dtos/update-image-list.dto';
+import { ValidateImageListIdPipe } from '../pipe/validate-image-list-id.pipe';
 import { ImageListService } from '../services/image-list-service';
 
 @Controller('image-list')
@@ -23,7 +24,9 @@ export class ImageListController {
 
   @Get(':id')
   @Header('Content-type', 'application/json')
-  async get(@Param('id') id: string): Promise<ImageListDTO> {
+  async get(
+    @Param('id', ValidateImageListIdPipe) id: string,
+  ): Promise<ImageListDTO> {
     return await this.service.get(id);
   }
 
