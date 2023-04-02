@@ -7,14 +7,12 @@ import {
 
 export class UpdateImageListRequestDTO {
   @IsString()
-  @IsNotEmpty()
-  @IsOptional()
-  userId: string;
-  @IsString()
   @IsAlphanumeric()
+  @IsNotEmpty()
   @IsOptional()
   name?: string;
   @IsString()
+  @IsNotEmpty()
   @IsAlphanumeric()
   @IsOptional()
   description?: string;

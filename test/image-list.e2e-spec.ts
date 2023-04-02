@@ -94,7 +94,7 @@ describe('ImageListController (e2e)', () => {
       expect(response.body.message).toBe('invalid-id is not a valid id');
     });
 
-    it('should return statusCode 400 when name is not valid', async () => {
+    it('should return statusCode 400 when name has invalid characters', async () => {
       const response = await request(app.getHttpServer())
         .put('/image-list/6429db33c30d77a0ee526d8e')
         .send({ name: '%%' });
@@ -103,6 +103,61 @@ describe('ImageListController (e2e)', () => {
       expect(
         response.body.message.includes(
           'name must contain only letters and numbers',
+        ),
+      ).toBeTruthy();
+    });
+
+    it('should return statusCode 400 when name is not a string', async () => {
+      const response = await request(app.getHttpServer())
+        .put('/image-list/6429db33c30d77a0ee526d8e')
+        .send({ name: 2 });
+
+      expect(response.statusCode).toBe(400);
+      expect(
+        response.body.message.includes('name must be a string'),
+      ).toBeTruthy();
+    });
+
+    it('should return statusCode 400 when name is a empty string', async () => {
+      const response = await request(app.getHttpServer())
+        .put('/image-list/6429db33c30d77a0ee526d8e')
+        .send({ name: '' });
+
+      expect(response.statusCode).toBe(400);
+      expect(
+        response.body.message.includes('name should not be empty'),
+      ).toBeTruthy();
+    });
+
+    it('should return statusCode 400 when description is not a string', async () => {
+      const response = await request(app.getHttpServer())
+        .put('/image-list/6429db33c30d77a0ee526d8e')
+        .send({ description: 34 });
+
+      expect(response.statusCode).toBe(400);
+      expect(
+        response.body.message.includes('description must be a string'),
+      ).toBeTruthy();
+    });
+    it('should return statusCode 400 when description is a empty string', async () => {
+      const response = await request(app.getHttpServer())
+        .put('/image-list/6429db33c30d77a0ee526d8e')
+        .send({ description: '' });
+
+      expect(response.statusCode).toBe(400);
+      expect(
+        response.body.message.includes('description should not be empty'),
+      ).toBeTruthy();
+    });
+    it('should return statusCode 400 when description has invalid characters', async () => {
+      const response = await request(app.getHttpServer())
+        .put('/image-list/6429db33c30d77a0ee526d8e')
+        .send({ description: '%' });
+
+      expect(response.statusCode).toBe(400);
+      expect(
+        response.body.message.includes(
+          'description must contain only letters and numbers',
         ),
       ).toBeTruthy();
     });
