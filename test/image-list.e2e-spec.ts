@@ -1,15 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
-import { promises } from 'fs';
-import mongoose from 'mongoose';
-import { join } from 'path';
 import { AppModule } from '../src/app.module';
 import { closeInMongodConnection } from '../src/utils/mongodb.utils';
 
 describe('ImageListController (e2e)', () => {
   let app: INestApplication;
-  let mockedImage;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -22,9 +18,6 @@ describe('ImageListController (e2e)', () => {
       }),
     );
     await app.init();
-    mockedImage = await promises.readFile(
-      join(__dirname, './image-mock/mock.png'),
-    );
   });
 
   afterAll(async () => {
@@ -33,13 +26,24 @@ describe('ImageListController (e2e)', () => {
   });
 
   describe('GET image-list', () => {
-    it('should return statusCode 400 when image id is not valid', async () => {
+    it('should return statusCode 400 when image-list id is not valid', async () => {
       const response = await request(app.getHttpServer()).get(
         '/image-list/test',
       );
 
       expect(response.statusCode).toBe(400);
       expect(response.body.message).toBe('test is not a valid id');
+    });
+  });
+
+  describe('GET image-list/all', () => {
+    it('should return statusCode 400 when user id is not valid', async () => {
+      const response = await request(app.getHttpServer()).get(
+        '/image-list/all/dummy',
+      );
+
+      expect(response.statusCode).toBe(400);
+      expect(response.body.message).toBe('dummy is not a valid user id');
     });
   });
 });

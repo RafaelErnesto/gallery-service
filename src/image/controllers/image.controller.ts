@@ -20,8 +20,8 @@ import { UpdateImageRequestDTO } from '../dtos/update-image-request.dto';
 import { CreateImageRequestMapper } from '../mappers/create-image-request.mapper';
 import { CreateImageResponseMapper } from '../mappers/create-image-response.mapper';
 import { UpdateImageRequestMapper } from '../mappers/update-image-request.mapper';
-import { ValidateImageIdPipe } from '../pipes/validate-image-id.pipe';
-import { ValidateUserIdPipe } from '../pipes/validate-user-id.pipe';
+import { ValidateImageIdPipe } from '../../pipes/validate-image-id.pipe';
+import { ValidateUserIdPipe } from '../../pipes/validate-user-id.pipe';
 import { ImageService } from '../services/image.service';
 
 const MAX_FILE_SIZE_IN_BYTES = 100000000;
