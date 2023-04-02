@@ -46,4 +46,19 @@ describe('ImageListController (e2e)', () => {
       expect(response.body.message).toBe('dummy is not a valid user id');
     });
   });
+
+  describe('POST image-list', () => {
+    it('should return statusCode 400 when name is not valid', async () => {
+      const response = await request(app.getHttpServer())
+        .post('/image-list')
+        .send({ name: 't%', userId: '31dd1a71-91b9-478a-b65b-b52dca276aa2' });
+
+      expect(response.statusCode).toBe(400);
+      expect(
+        response.body.message.includes(
+          'name must contain only letters and numbers',
+        ),
+      ).toBeTruthy();
+    });
+  });
 });
