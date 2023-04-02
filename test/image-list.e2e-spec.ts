@@ -60,5 +60,28 @@ describe('ImageListController (e2e)', () => {
         ),
       ).toBeTruthy();
     });
+    it('should return statusCode 400 when name is empty', async () => {
+      const response = await request(app.getHttpServer())
+        .post('/image-list')
+        .send({ name: '', userId: '31dd1a71-91b9-478a-b65b-b52dca276aa2' });
+
+      expect(response.statusCode).toBe(400);
+      expect(
+        response.body.message.includes('name should not be empty'),
+      ).toBeTruthy();
+    });
+    it('should return statusCode 400 when userId is not valid', async () => {
+      const response = await request(app.getHttpServer())
+        .post('/image-list')
+        .send({ name: 'testeuser', userId: '' });
+
+      expect(response.statusCode).toBe(400);
+      expect(
+        response.body.message.includes('userId should not be empty'),
+      ).toBeTruthy();
+      expect(
+        response.body.message.includes('userId must be a UUID'),
+      ).toBeTruthy();
+    });
   });
 });
