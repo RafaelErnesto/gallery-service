@@ -93,5 +93,18 @@ describe('ImageListController (e2e)', () => {
       expect(response.statusCode).toBe(400);
       expect(response.body.message).toBe('invalid-id is not a valid id');
     });
+
+    it('should return statusCode 400 when name is not valid', async () => {
+      const response = await request(app.getHttpServer())
+        .put('/image-list/6429db33c30d77a0ee526d8e')
+        .send({ name: '%%' });
+
+      expect(response.statusCode).toBe(400);
+      expect(
+        response.body.message.includes(
+          'name must contain only letters and numbers',
+        ),
+      ).toBeTruthy();
+    });
   });
 });
