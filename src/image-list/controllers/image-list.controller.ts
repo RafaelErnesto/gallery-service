@@ -48,7 +48,7 @@ export class ImageListController {
   @Put(':id')
   @Header('Content-type', 'application/json')
   async update(
-    @Param('id') id: string,
+    @Param('id', ValidateImageListIdPipe) id: string,
     @Body() body: UpdateImageListRequestDTO,
   ): Promise<ImageListDTO> {
     const requestPayload = Object.assign({} as UpdateImageListDTO, {

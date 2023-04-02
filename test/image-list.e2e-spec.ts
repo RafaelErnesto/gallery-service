@@ -84,4 +84,14 @@ describe('ImageListController (e2e)', () => {
       ).toBeTruthy();
     });
   });
+  describe('PUT image-list', () => {
+    it('should return statusCode 400 when image-list id is not valid', async () => {
+      const response = await request(app.getHttpServer())
+        .put('/image-list/invalid-id')
+        .send({ name: 'updatedlist' });
+
+      expect(response.statusCode).toBe(400);
+      expect(response.body.message).toBe('invalid-id is not a valid id');
+    });
+  });
 });
