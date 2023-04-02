@@ -59,7 +59,7 @@ export class ImageListController {
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string) {
+  async delete(@Param('id', ValidateImageListIdPipe) id: string) {
     return await this.service.delete(id);
   }
 }

@@ -216,4 +216,15 @@ describe('ImageListController (e2e)', () => {
       ).toBeTruthy();
     });
   });
+
+  describe('DELETE image-list', () => {
+    it('should return statusCode 400 when image-list id is not valid', async () => {
+      const response = await request(app.getHttpServer()).delete(
+        '/image-list/test',
+      );
+
+      expect(response.statusCode).toBe(400);
+      expect(response.body.message).toBe('test is not a valid id');
+    });
+  });
 });
