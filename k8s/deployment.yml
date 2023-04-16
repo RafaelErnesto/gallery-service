@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: 
+          image: comptworks/lab:gallery-service
           ports: 
             - containerPort: 8080
           env: 

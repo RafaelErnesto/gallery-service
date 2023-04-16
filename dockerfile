@@ -1,16 +1,17 @@
-FROM node:19-alpine As development
+FROM node:alpine As development
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
+COPY yarn.lock ./
 
-RUN yarn install --development
+RUN yarn install --dev
 
 COPY . .
 
 RUN yarn run build
 
-FROM node:19-alpine as production
+FROM node:alpine as production
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
@@ -19,7 +20,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN yarn install --production
+RUN yarn install --prod
 
 COPY . .
 
