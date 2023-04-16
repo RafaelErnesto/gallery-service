@@ -21,3 +21,5 @@ spec:
             - name: MONGODB_URL
               value: mongodb://mongo:27017/gallery-service
           imagePullPolicy: Always
+      imagePullSecrets:
+        - name: docker-registry-secret
