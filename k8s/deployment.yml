@@ -20,6 +20,8 @@ spec:
           env: 
             - name: MONGODB_URL
               value: mongodb://mongo:27017/gallery-service
+            - name: NODE_ENV
+              value: prod
           imagePullPolicy: Always
       imagePullSecrets:
         - name: docker-registry-secret
