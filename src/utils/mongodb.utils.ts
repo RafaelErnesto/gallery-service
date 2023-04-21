@@ -1,7 +1,6 @@
 import { DynamicModule } from '@nestjs/common';
 import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
-import { MongoMemoryServer } from 'mongodb-memory-server';
-let mongod: MongoMemoryServer;
+import { MongoMemoryServerFactory } from './mongo-memory-server.factory';
 
 export const getMongooseModule = (
   options: MongooseModuleOptions = {},
@@ -13,19 +12,10 @@ export const getMongooseModule = (
   });
 };
 
-export const closeInMongodConnection = async () => {
-  if (mongod) await mongod.stop();
-};
+export const closeInMongodConnection = MongoMemoryServerFactory.closeInMongodConnection()
 
 const mongoServer = {
-  test: async (options: MongooseModuleOptions = {}) => {
-    mongod = await MongoMemoryServer.create();
-    const mongoUri = mongod.getUri();
-    return {
-      uri: mongoUri,
-      ...options,
-    };
-  },
+  test: MongoMemoryServerFactory.create(),
   development: async (options: MongooseModuleOptions = {}) => {
     return {
       uri: 'mongodb://local-db:27017/local',
