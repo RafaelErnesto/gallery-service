@@ -3,10 +3,13 @@ kind: PersistentVolume
 metadata:
   name: pv
 spec:
-  storageClassName: ""
+  capacity:
+    storage: 2Gi
+  volumeMode: Filesystem
   accessModes:
-    - ReadWriteOnce 
-  volumeName: pv
-  resources:
-    requests:
-      storage: 1Gi
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: slow
+  mountOptions:
+    - hard
+    - nfsvers=4.1
