@@ -6,7 +6,7 @@ spec:
   storageClassName: "slow"
   accessModes:
     - ReadWriteOnce 
-  volumeName: pv
+  volumeName: pv001
   resources:
     requests:
       storage: 1Gi
