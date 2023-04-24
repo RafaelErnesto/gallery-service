@@ -18,13 +18,13 @@ const mongoServer = {
   test: MongoMemoryServerFactory.create(),
   development: async (options: MongooseModuleOptions = {}) => {
     return {
-      uri: 'mongodb://local-db:27017/local',
+      uri: process.env.MONGO_URL,
       ...options,
     };
   },
   prod: async (options: MongooseModuleOptions = {}) => {
     return {
-      uri: 'mongodb://local-db:27017/local',
+      uri: process.env.MONGO_URL,
       ...options,
     };
   },
