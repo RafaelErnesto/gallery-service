@@ -7,6 +7,7 @@ services:
     environment:
       - NODE_ENV=prod
       - MONGO_URL=mongodb://mongo:27017/gallery-service
+      - PORT=3000
     networks:
       - application
   mongo:
