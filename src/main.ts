@@ -18,9 +18,9 @@ async function bootstrap() {
     .addTag('galllery-service')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('docs', app, document);
 
-  await app.init();
+  app.listen(process.env.PORT || 3000)
 
   console.info(`Listening on port: ${process.env.PORT}`)
 }
