@@ -4,7 +4,8 @@ import { ImageModule } from './image/image.module';
 import { ImageListModule } from './image-list/image-list.module';
 import { getMongooseModule } from './utils/mongodb.utils';
 import configuration from './config/configuration';
-import { ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -16,5 +17,10 @@ import { ThrottlerModule } from '@nestjs/throttler';
     limit: 10,
   }),
     ImageModule, ImageListModule, getMongooseModule()],
+  providers: [
+    {
+      provide: APP_GUARD, useClass: ThrottlerGuard
+    }
+  ]
 })
 export class AppModule { }
